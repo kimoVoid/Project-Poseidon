@@ -11,13 +11,11 @@ public class PingCommand extends Command {
         super(name);
         this.description = "Shows a player's ping";
         this.usageMessage = "/ping [player]";
-        this.setPermission("poseidon.command.ping");
+        this.setPermission("nsmb.command.ping");
     }
 
     @Override
     public boolean execute(CommandSender sender, String commandLabel, String[] args) {
-        if (!testPermission(sender)) return true;
-
         if (args.length < 1 && !(sender instanceof Player)) {
             sender.sendMessage(String.format("§cUsage: %s. Sender must be a player.", this.usageMessage));
             return true;

@@ -233,7 +233,7 @@ public abstract class Command {
         String colored = ChatColor.GRAY + "(" + result + ")";
 
         if (!(source instanceof ConsoleCommandSender)) {
-            source.sendMessage(message);
+            source.sendMessage(ChatColor.GRAY + message);
         }
 
         for (Permissible user : users) {

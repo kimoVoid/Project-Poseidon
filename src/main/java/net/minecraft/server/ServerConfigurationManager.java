@@ -2,13 +2,16 @@ package net.minecraft.server;
 
 import com.legacyminecraft.poseidon.Poseidon;
 import com.legacyminecraft.poseidon.PoseidonConfig;
+import net.ornithemc.osl.networking.api.server.ServerPlayNetworking;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.craftbukkit.command.ColouredConsoleSender;
+import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.*;
+import wtf.basico.networking.payload.FlightPayload;
 
 import java.io.*;
 import java.util.*;
@@ -314,6 +317,7 @@ public class ServerConfigurationManager {
             Bukkit.getServer().getPluginManager().callEvent(event);
         }
         // CraftBukkit end
+        ServerPlayNetworking.send(entityplayer1, "BHCreative|Flight", new FlightPayload(entityplayer1.fly));
         return entityplayer1;
     }
 

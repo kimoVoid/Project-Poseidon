@@ -435,6 +435,14 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         return this.getHandle().ping;
     }
 
+    public boolean canFly() {
+        return this.getHandle().fly;
+    }
+
+    public void setFly(boolean b) {
+        this.getHandle().fly = b;
+    }
+
     public void sendPacket(final Player player, final Packet packet) {
         if(player.isOnline()) {
             NetServerHandler nsh = getHandle().netServerHandler;

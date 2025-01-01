@@ -10,6 +10,9 @@ import com.projectposeidon.johnymuffin.UUIDManager;
 import com.legacyminecraft.poseidon.watchdog.WatchDogThread;
 import jline.ConsoleReader;
 import joptsimple.OptionSet;
+import net.ornithemc.osl.networking.api.server.ServerPlayNetworking;
+import net.ornithemc.osl.networking.impl.HandshakePayload;
+import net.ornithemc.osl.networking.impl.NetServerHandlerImpl;
 import org.bukkit.Bukkit;
 import org.bukkit.World.Environment;
 import org.bukkit.craftbukkit.CraftServer;
@@ -358,6 +361,7 @@ public class MinecraftServer implements Runnable, ICommandListener {
     }
 
     public void stop() { // CraftBukkit - private -> public
+        NetServerHandlerImpl.destroy(this);
         log.info("Stopping server");
 
         //Project Poseidon Start
@@ -459,6 +463,16 @@ public class MinecraftServer implements Runnable, ICommandListener {
     }
 
     public void run() {
+        // NSMB Poseidon Start - OSL Networking
+        NetServerHandlerImpl.setUp(this);
+
+        ServerPlayNetworking.registerListener(HandshakePayload.CHANNEL, HandshakePayload::new, (server, handler, player, payload) -> {
+            handler.registerClientChannels(payload.channels);
+            //ServerConnectionEvents.PLAY_READY.invoker().accept(server, player);
+            return true;
+        });
+        // NSMB Poseidon End - OSL Networking
+
         try {
             if (this.init()) {
                 long i = System.currentTimeMillis();

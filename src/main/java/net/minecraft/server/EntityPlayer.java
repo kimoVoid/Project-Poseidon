@@ -30,6 +30,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
     private int bO = 0;
     public boolean h;
     public int ping = 0;
+    public boolean fly = false;
 
     public EntityPlayer(MinecraftServer minecraftserver, World world, String s, ItemInWorldManager iteminworldmanager) {
         super(world);
@@ -591,4 +592,12 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
         return super.toString() + "(" + this.name + " at " + this.locX + "," + this.locY + "," + this.locZ + ")";
     }
     // CraftBukkit end
+
+    @Override
+    protected void a(float f) {
+        if (this.fly) {
+            return;
+        }
+        super.a(f);
+    }
 }

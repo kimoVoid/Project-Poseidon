@@ -1,10 +1,10 @@
 package net.minecraft.server;
 
 import com.legacyminecraft.poseidon.Poseidon;
-import com.legacyminecraft.poseidon.PoseidonServer;
 import com.legacyminecraft.poseidon.event.PlayerSendPacketEvent;
 import com.projectposeidon.ConnectionType;
 import com.legacyminecraft.poseidon.PoseidonConfig;
+import net.ornithemc.osl.networking.api.server.ServerPlayNetworking;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -22,10 +22,9 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.packet.PacketReceivedEvent;
 import org.bukkit.event.player.*;
+import wtf.basico.networking.PlayerInfoManager;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 // CraftBukkit start
@@ -54,8 +53,25 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
     private boolean receivedKeepAlive = true;
     private long keepAliveTimeSent;
     private boolean firePacketEvents;
-    
     private final String msgPlayerLeave;
+
+    //NSMB Poseidon Start - OSL Networking port
+    private Set<String> clientChannels;
+    private int lastPlayerInfoPacket;
+    private boolean initialPlayerInfo = false;
+
+    public boolean isPlayReady() {
+        return clientChannels != null;
+    }
+
+    public void registerClientChannels(Set<String> channels) {
+        clientChannels = new LinkedHashSet<>(channels);
+    }
+
+    public boolean isRegisteredClientChannel(String channel) {
+        return clientChannels != null && clientChannels.contains(channel);
+    }
+    //NSMB Poseidon End - OSL Networking port
 
     public boolean isReceivedKeepAlive() {
         return receivedKeepAlive;
@@ -135,6 +151,18 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
         this.i = false;
         this.networkManager.b();
         this.currentTick++;
+        this.lastPlayerInfoPacket++;
+
+        if (ServerPlayNetworking.canSend(this.player, "BetaQOL|PlayerInfo") && !this.initialPlayerInfo) {
+            PlayerInfoManager.INSTANCE.sendPlayerInfo(this.player);
+            this.initialPlayerInfo = true;
+        }
+
+        if (this.lastPlayerInfoPacket >= 60) {
+            PlayerInfoManager.INSTANCE.sendPlayerInfo(this.player.name, true, this.player.ping);
+            this.lastPlayerInfoPacket = 0;
+        }
+
         if (this.currentTick >= 20) {
             this.currentTick = 0;
             if (!this.receivedKeepAlive) {
@@ -149,6 +177,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 
     public void disconnect(String s) {
         if (disconnected) return; // Poseidon: Kick/Disconnect spam fix
+        PlayerInfoManager.INSTANCE.sendPlayerInfo(this.player.name, false, 0);
 
         // CraftBukkit start
         String leaveMessage = this.msgPlayerLeave.replace("%player%", this.player.name);

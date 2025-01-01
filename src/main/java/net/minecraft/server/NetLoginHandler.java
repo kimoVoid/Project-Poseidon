@@ -3,9 +3,13 @@ package net.minecraft.server;
 import com.projectposeidon.ConnectionType;
 import com.legacyminecraft.poseidon.PoseidonConfig;
 import com.projectposeidon.johnymuffin.LoginProcessHandler;
+import net.ornithemc.osl.networking.impl.Constants;
+import net.ornithemc.osl.networking.impl.HandshakePayload;
+import net.ornithemc.osl.networking.impl.NetServerHandlerImpl;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.CraftServer;
+import wtf.basico.networking.PlayerInfoManager;
 
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -30,6 +34,7 @@ public class NetLoginHandler extends NetHandler {
     private boolean receivedLoginPacket = false;
     private int rawConnectionType;
     private boolean receivedKeepAlive = false;
+    private boolean osl;
     
     private final String msgKickShutdown;
 
@@ -84,6 +89,9 @@ public class NetLoginHandler extends NetHandler {
     }
 
     public void a(Packet2Handshake packet2handshake) {
+        if (Constants.OSL_HANDSHAKE_KEY.equals(packet2handshake.a)) {
+            osl = true;
+        }
         if (this.server.onlineMode) {
             this.serverId = Long.toHexString(d.nextLong());
             this.networkManager.queue(new Packet2Handshake(this.serverId));
@@ -199,10 +207,19 @@ public class NetLoginHandler extends NetHandler {
             if (PoseidonConfig.getInstance().getBoolean("settings.support.modloader.enable", false)) {
                 net.minecraft.server.ModLoaderMp.HandleAllLogins(entityplayer);
             }
+            PlayerInfoManager.INSTANCE.sendPlayerInfo(packet1login.name, true, 0);
             // poseidon end
         }
 
         this.c = true;
+        if (entityplayer != null) {
+            if (osl) {
+                // send channel registration data as soon as login occurs
+                NetServerHandlerImpl.doSend(entityplayer, HandshakePayload.CHANNEL, HandshakePayload.server());
+            }
+
+            //ServerConnectionEvents.LOGIN.invoker().accept(server, entityplayer);
+        }
     }
 
     public void a(String s, Object[] aobject) {
