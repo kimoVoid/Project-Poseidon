@@ -431,6 +431,10 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         return !hiddenPlayers.contains(player.getUniqueId());
     }
 
+    public int getPing() {
+        return this.getHandle().ping;
+    }
+
     public void sendPacket(final Player player, final Packet packet) {
         if(player.isOnline()) {
             NetServerHandler nsh = getHandle().netServerHandler;

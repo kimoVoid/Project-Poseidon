@@ -50,7 +50,9 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
     private boolean usingReleaseToBeta = false; //Project Poseidon - Create Variable
     private ConnectionType connectionType = ConnectionType.NORMAL; //Project Poseidon - Create Variable
     private int rawConnectionType = 0; //Project Poseidon - Create Variable
-    private boolean receivedKeepAlive = false;
+    private int currentTick;
+    private boolean receivedKeepAlive = true;
+    private long keepAliveTimeSent;
     private boolean firePacketEvents;
     
     private final String msgPlayerLeave;
@@ -132,7 +134,15 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
     public void a() {
         this.i = false;
         this.networkManager.b();
-        if (this.f - this.g > 20) {
+        this.currentTick++;
+        if (this.currentTick >= 20) {
+            this.currentTick = 0;
+            if (!this.receivedKeepAlive) {
+                return;
+            }
+
+            this.receivedKeepAlive = false;
+            this.keepAliveTimeSent = System.currentTimeMillis();
             this.sendPacket(new Packet0KeepAlive());
         }
     }
@@ -990,6 +1000,8 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
     }
 
     public void a(Packet0KeepAlive packet0KeepAlive) {
+        int ping = (int) (System.currentTimeMillis() - this.keepAliveTimeSent);
+        this.player.ping = Math.max(ping, 0);
         this.receivedKeepAlive = true;
     }
 

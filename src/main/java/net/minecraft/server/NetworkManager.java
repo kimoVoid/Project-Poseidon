@@ -184,7 +184,11 @@ public class NetworkManager {
                 int i = packet.b();
 
                 aint[i] += packet.a() + 1;
-                this.m.add(packet);
+                if (packet instanceof Packet0KeepAlive || packet instanceof Packet254GetInfo)
+                    packet.a(this.p);
+                else {
+                    this.m.add(packet);
+                }
                 flag = true;
             } else {
                 this.a("disconnect.endOfStream", new Object[0]);

@@ -29,6 +29,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
     private ItemStack[] bN = new ItemStack[]{null, null, null, null, null};
     private int bO = 0;
     public boolean h;
+    public int ping = 0;
 
     public EntityPlayer(MinecraftServer minecraftserver, World world, String s, ItemInWorldManager iteminworldmanager) {
         super(world);
