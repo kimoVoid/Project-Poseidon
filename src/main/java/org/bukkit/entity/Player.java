@@ -348,6 +348,12 @@ public interface Player extends HumanEntity, CommandSender, OfflinePlayer {
      */
     public boolean canSee(Player player);
 
+    /**
+     * Gets the player's ping
+     * Only works if the client can handle KeepAlive packets (modded)
+     */
+    public int getPing();
+
     public void sendPacket(final Player player, final Packet packet);
 
 }
