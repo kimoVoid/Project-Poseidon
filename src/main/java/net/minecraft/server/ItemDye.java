@@ -1,5 +1,9 @@
 package net.minecraft.server;
 
+import com.legacyminecraft.poseidon.PoseidonConfig;
+
+import java.util.Random;
+
 public class ItemDye extends Item {
 
     public static final String[] a = new String[] { "black", "red", "green", "brown", "blue", "purple", "cyan", "silver", "gray", "pink", "lime", "yellow", "lightBlue", "magenta", "orange", "white"};
@@ -54,7 +58,12 @@ public class ItemDye extends Item {
 
                         if (world.getTypeId(k1, l1, i2) == 0) {
                             if (b.nextInt(10) != 0) {
-                                world.setTypeIdAndData(k1, l1, i2, Block.LONG_GRASS.id, 1);
+                                if (PoseidonConfig.getInstance().getConfigBoolean("world-settings.bone-meal-ferns.enabled", false)) {
+                                    int meta = new Random().nextInt(2) == 0 ? 1 : 2;
+                                    world.setTypeIdAndData(k1, l1, i2, Block.LONG_GRASS.id, meta);
+                                } else {
+                                    world.setTypeIdAndData(k1, l1, i2, Block.LONG_GRASS.id, 1);
+                                }
                             } else if (b.nextInt(3) != 0) {
                                 world.setTypeId(k1, l1, i2, Block.YELLOW_FLOWER.id);
                             } else {
