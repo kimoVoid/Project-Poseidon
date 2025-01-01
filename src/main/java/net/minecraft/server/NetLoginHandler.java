@@ -71,6 +71,18 @@ public class NetLoginHandler extends NetHandler {
         }
     }
 
+    public void a(Packet254GetInfo packet254getinfo) {
+        try {
+            String response = this.server.messageOfTheDay + "§" + this.server.serverConfigurationManager.players.size() + "\u00A7" + this.server.serverConfigurationManager.maxPlayers;
+            this.networkManager.queue(new Packet255KickDisconnect(response));
+            this.networkManager.d();
+            this.server.networkListenThread.a(this.networkManager.socket);
+            this.c = true;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+    }
+
     public void a(Packet2Handshake packet2handshake) {
         if (this.server.onlineMode) {
             this.serverId = Long.toHexString(d.nextLong());
@@ -80,9 +92,11 @@ public class NetLoginHandler extends NetHandler {
         }
     }
 
+    /*
     public void a(Packet0KeepAlive packet0KeepAlive) {
         receivedKeepAlive = true;
     }
+     */
 
     public void a(Packet1Login packet1login) {
         if (receivedLoginPacket) {
@@ -170,7 +184,7 @@ public class NetLoginHandler extends NetHandler {
             netserverhandler.setUsingReleaseToBeta(usingReleaseToBeta);
             netserverhandler.setConnectionType(connectionType);
             netserverhandler.setRawConnectionType(rawConnectionType);
-            netserverhandler.setReceivedKeepAlive(receivedKeepAlive);
+            //netserverhandler.setReceivedKeepAlive(receivedKeepAlive);
             //Poseidon End
             netserverhandler.sendPacket(new Packet1Login("", entityplayer.id, worldserver.getSeed(), (byte) worldserver.worldProvider.dimension));
             netserverhandler.sendPacket(new Packet6SpawnPosition(chunkcoordinates.x, chunkcoordinates.y, chunkcoordinates.z));

@@ -12,6 +12,10 @@ public abstract class NetHandler {
 
     public void a(String s, Object[] aobject) {}
 
+    public void a(Packet254GetInfo packet254getinfo) {
+        this.a((Packet) packet254getinfo);
+    }
+
     public void a(Packet0KeepAlive packet0KeepAlive) {
         this.a((Packet) packet0KeepAlive);
     }
