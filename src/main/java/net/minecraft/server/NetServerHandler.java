@@ -464,7 +464,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 
             AxisAlignedBB axisalignedbb = this.player.boundingBox.clone().b((double) f4, (double) f4, (double) f4).a(0.0D, -0.55D, 0.0D);
 
-            if (!this.minecraftServer.allowFlight && !worldserver.b(axisalignedbb)) {
+            if (!this.player.fly && !this.minecraftServer.allowFlight && !worldserver.b(axisalignedbb)) {
                 if (d6 >= -0.03125D) {
                     ++this.h;
                     if (this.h > 80) {
