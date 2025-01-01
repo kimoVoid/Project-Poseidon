@@ -18,13 +18,12 @@ class NetworkAcceptThread extends Thread {
     }
 
     public void run() {
-        HashMap hashmap = new HashMap();
-
         while (this.b.b) {
             try {
                 Socket socket = NetworkListenThread.a(this.b).accept();
 
                 if (socket != null) {
+                    /*
                     InetAddress inetaddress = socket.getInetAddress();
 
                     if (hashmap.containsKey(inetaddress) && !"127.0.0.1".equals(inetaddress.getHostAddress()) && System.currentTimeMillis() - ((Long) hashmap.get(inetaddress)).longValue() < 5000L) {
@@ -36,6 +35,21 @@ class NetworkAcceptThread extends Thread {
 
                         NetworkListenThread.a(this.b, netloginhandler);
                     }
+                     */
+
+                    synchronized (this.b.i) {
+                        InetAddress var3 = socket.getInetAddress();
+                        if (this.b.i.containsKey(var3) && System.currentTimeMillis() - (Long)this.b.i.get(var3) < 5000L) {
+                            this.b.i.put(var3, System.currentTimeMillis());
+                            socket.close();
+                            continue;
+                        }
+
+                        this.b.i.put(var3, System.currentTimeMillis());
+                    }
+
+                    NetLoginHandler netloginhandler = new NetLoginHandler(this.a, socket, "Connection #" + NetworkListenThread.b(this.b));
+                    NetworkListenThread.a(this.b, netloginhandler);
                 }
             } catch (IOException ioexception) {
                 ioexception.printStackTrace();

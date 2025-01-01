@@ -19,7 +19,7 @@ public class NetworkListenThread {
     private ArrayList g = new ArrayList();
     private ArrayList h = new ArrayList();
     public MinecraftServer c;
-    private HashMap i = new HashMap();
+    public HashMap i = new HashMap();
 
     public NetworkListenThread(MinecraftServer minecraftserver, InetAddress inetaddress, int i) throws IOException {
         this.c = minecraftserver;
@@ -32,7 +32,6 @@ public class NetworkListenThread {
 
     public void a(Socket socket) {
         InetAddress inetaddress = socket.getInetAddress();
-        HashMap hashmap = this.i;
         synchronized (this.i) {
             this.i.remove(inetaddress);
         }
