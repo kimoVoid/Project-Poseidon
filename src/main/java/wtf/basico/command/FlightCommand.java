@@ -1,4 +1,4 @@
-package com.legacyminecraft.poseidon.commands;
+package wtf.basico.command;
 
 import net.ornithemc.osl.networking.api.server.ServerPlayNetworking;
 import org.bukkit.command.Command;

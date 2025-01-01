@@ -1,8 +1,9 @@
 package org.bukkit.command;
 
 import com.legacyminecraft.poseidon.PoseidonConfig;
-import com.legacyminecraft.poseidon.commands.FlightCommand;
-import com.legacyminecraft.poseidon.commands.PingCommand;
+import wtf.basico.command.ClearCommand;
+import wtf.basico.command.FlightCommand;
+import wtf.basico.command.PingCommand;
 import com.legacyminecraft.poseidon.commands.PoseidonCommand;
 import com.legacyminecraft.poseidon.commands.TPSCommand;
 import org.bukkit.Server;
@@ -58,9 +59,10 @@ public class SimpleCommandMap implements CommandMap {
         if (PoseidonConfig.getInstance().getConfigBoolean("command.tps.enabled"))
             register("poseidon", new TPSCommand("tps"));
 
-        // NSMB Command
-        register("ping", new PingCommand("ping"));
+        // NSMB Commands
+        register("clear", new ClearCommand("clear"));
         register("fly", new FlightCommand("fly"));
+        register("ping", new PingCommand("ping"));
     }
 
     /**

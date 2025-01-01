@@ -34,12 +34,10 @@ class NetworkWriterThread extends Thread {
                     ;
                 }
 
-                if (!this.fast) { // Poseidon
-                    try {
-                        sleep(100L);
-                    } catch (InterruptedException interruptedexception) {
-                        ;
-                    }
+                try {
+                    sleep(this.fast ? 0L : 100L);
+                } catch (InterruptedException interruptedexception) {
+                    ;
                 }
 
                 try {

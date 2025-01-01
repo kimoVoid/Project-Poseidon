@@ -1,4 +1,4 @@
-package com.legacyminecraft.poseidon.commands;
+package wtf.basico.command;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
