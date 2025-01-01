@@ -534,10 +534,16 @@ public class MinecraftServer implements Runnable, ICommandListener {
     //Project Poseidon Start - Tick Update
     private final LinkedList<Double> tpsRecords = new LinkedList<>();
     private long lastTick = System.currentTimeMillis();
+    private long lastTickNano = System.nanoTime();
+    private long[] averageTickTimes = new long[100];
     private int tickCount = 0;
 
     public LinkedList<Double> getTpsRecords() {
         return tpsRecords;
+    }
+
+    public long[] getAverageTickTimes() {
+        return averageTickTimes;
     }
     //Project Poseidon End - Tick Update
 
@@ -570,6 +576,7 @@ public class MinecraftServer implements Runnable, ICommandListener {
 
         //Project Poseidon Start - Tick Update
         long currentTime = System.currentTimeMillis();
+        this.lastTickNano = System.nanoTime();
         tickCount++;
 
         //Check if a second has passed
@@ -631,6 +638,10 @@ public class MinecraftServer implements Runnable, ICommandListener {
         } catch (Exception exception) {
             log.log(Level.WARNING, "Unexpected exception while parsing console command", exception);
         }
+
+        //Project Poseidon Start - (MS per) Tick Update
+        this.averageTickTimes[this.ticks % 100] = System.nanoTime() - this.lastTickNano;
+        //Project Poseidon End - (MS per) Tick Update
     }
 
     public void issueCommand(String s, ICommandListener icommandlistener) {

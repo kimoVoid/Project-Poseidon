@@ -19,6 +19,10 @@ public final class Poseidon {
         return ((CraftServer) Bukkit.getServer()).getServer().getTpsRecords();
     }
 
+    public static long[] getAverageTickTimes() {
+        return ((CraftServer) Bukkit.getServer()).getServer().getAverageTickTimes();
+    }
+
     public static PoseidonServer getServer() {
         return server;
     }
