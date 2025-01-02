@@ -1,5 +1,6 @@
 package net.minecraft.server;
 
+import com.legacyminecraft.poseidon.PoseidonConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.BlockState;
@@ -1706,7 +1707,18 @@ public class World implements IBlockAccess {
             boolean flag = false;
 
             if (this.allowMonsters && this.spawnMonsters >= 1) {
-                flag = SpawnerCreature.a(this, this.players);
+                if (PoseidonConfig.getInstance().getConfigBoolean("world-settings.one-player-sleep", false)) {
+                    List sleepingList = new ArrayList();
+                    for (Object obj : this.players) {
+                        EntityHuman human = (EntityHuman) obj;
+                        if (human.isDeeplySleeping() || human.fauxSleeping) {
+                            sleepingList.add(obj);
+                        }
+                    }
+                    flag = SpawnerCreature.a(this, sleepingList);
+                } else {
+                    flag = SpawnerCreature.a(this, this.players);
+                }
             }
 
             if (!flag) {
@@ -2320,10 +2332,15 @@ public class World implements IBlockAccess {
 
     public void everyoneSleeping() {
         this.J = !this.players.isEmpty();
-        Iterator iterator = this.players.iterator();
+        for (Object player : this.players) {
+            EntityHuman entityhuman = (EntityHuman) player;
 
-        while (iterator.hasNext()) {
-            EntityHuman entityhuman = (EntityHuman) iterator.next();
+            if (PoseidonConfig.getInstance().getConfigBoolean("world-settings.one-player-sleep", false)) {
+                if (entityhuman.isSleeping() || entityhuman.fauxSleeping) {
+                    this.J = true;
+                    break;
+                }
+            }
 
             // CraftBukkit
             if (!entityhuman.isSleeping() && !entityhuman.fauxSleeping) {
@@ -2359,6 +2376,16 @@ public class World implements IBlockAccess {
     }
 
     public boolean everyoneDeeplySleeping() {
+        if (PoseidonConfig.getInstance().getConfigBoolean("world-settings.one-player-sleep", false)) {
+            for (Object player : this.players) {
+                EntityHuman entityhuman = (EntityHuman) player;
+                if (entityhuman.isDeeplySleeping() || entityhuman.fauxSleeping) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         if (this.J && !this.isStatic) {
             Iterator iterator = this.players.iterator();
 
