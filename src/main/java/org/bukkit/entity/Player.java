@@ -357,6 +357,9 @@ public interface Player extends HumanEntity, CommandSender, OfflinePlayer {
     public boolean canFly();
     public void setFly(boolean b);
 
+    public boolean canBreakInstantly();
+    public void setInstantBreak(boolean b);
+
     public void sendPacket(final Player player, final Packet packet);
 
 }

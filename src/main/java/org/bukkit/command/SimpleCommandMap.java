@@ -1,9 +1,7 @@
 package org.bukkit.command;
 
 import com.legacyminecraft.poseidon.PoseidonConfig;
-import wtf.basico.command.ClearCommand;
-import wtf.basico.command.FlightCommand;
-import wtf.basico.command.PingCommand;
+import wtf.basico.command.*;
 import com.legacyminecraft.poseidon.commands.PoseidonCommand;
 import com.legacyminecraft.poseidon.commands.TPSCommand;
 import org.bukkit.Server;
@@ -61,8 +59,13 @@ public class SimpleCommandMap implements CommandMap {
 
         // NSMB Commands
         register("clear", new ClearCommand("clear"));
+        register("debug", new DebugCommand("debug"));
         register("fly", new FlightCommand("fly"));
+        register("ib", new IbCommand("ib"));
         register("ping", new PingCommand("ping"));
+        register("setblock", new SetBlockCommand("setblock"));
+        register("summon", new SummonCommand("summon"));
+        register("toggledownfall", new ToggledownfallCommand("toggledownfall"));
     }
 
     /**

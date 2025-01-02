@@ -1,6 +1,7 @@
 package wtf.basico.command;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -17,7 +18,7 @@ public class PingCommand extends Command {
     @Override
     public boolean execute(CommandSender sender, String commandLabel, String[] args) {
         if (args.length < 1 && !(sender instanceof Player)) {
-            sender.sendMessage(String.format("§cUsage: %s. Sender must be a player.", this.usageMessage));
+            sender.sendMessage(ChatColor.RED + "Sender must be a player.");
             return true;
         }
 

@@ -52,6 +52,10 @@ public class ItemInWorldManager {
     }
 
     public void dig(int i, int j, int k, int l) {
+        if (this.player instanceof EntityPlayer && ((EntityPlayer)this.player).instantBreak) {
+            this.c(i, j, k);
+            return;
+        }
         // this.world.douseFire((EntityHuman) null, i, j, k, l); // CraftBukkit - moved down
         this.lastDigTick = (int) (System.currentTimeMillis() / 50); // CraftBukkit
         int i1 = this.world.getTypeId(i, j, k);

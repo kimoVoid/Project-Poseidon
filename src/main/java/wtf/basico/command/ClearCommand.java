@@ -1,6 +1,7 @@
 package wtf.basico.command;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -26,7 +27,7 @@ public class ClearCommand extends Command {
         String target = args.length > 0 ? args[0] : sender.getName();
         Player p = Bukkit.getServer().getPlayer(target);
         if (p == null) {
-            sender.sendMessage("§cInvalid player \"" + target + "\"");
+            sender.sendMessage(ChatColor.RED + "Can't find player \"" + args[0] + "\"");
             return false;
         }
 

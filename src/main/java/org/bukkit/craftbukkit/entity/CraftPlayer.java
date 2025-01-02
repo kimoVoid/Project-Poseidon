@@ -443,6 +443,14 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         this.getHandle().fly = b;
     }
 
+    public boolean canBreakInstantly() {
+        return this.getHandle().instantBreak;
+    }
+
+    public void setInstantBreak(boolean b) {
+        this.getHandle().instantBreak = b;
+    }
+
     public void sendPacket(final Player player, final Packet packet) {
         if(player.isOnline()) {
             NetServerHandler nsh = getHandle().netServerHandler;

@@ -1,6 +1,7 @@
 package wtf.basico.command;
 
 import net.ornithemc.osl.networking.api.server.ServerPlayNetworking;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
@@ -21,7 +22,7 @@ public class FlightCommand extends Command {
         if (!testPermission(sender)) return true;
 
         if (!(sender instanceof Player)) {
-            sender.sendMessage("§cSender must be a player.");
+            sender.sendMessage(ChatColor.RED + "Sender must be a player.");
             return true;
         }
 

@@ -31,6 +31,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
     public boolean h;
     public int ping = 0;
     public boolean fly = false;
+    public boolean instantBreak = false;
 
     public EntityPlayer(MinecraftServer minecraftserver, World world, String s, ItemInWorldManager iteminworldmanager) {
         super(world);
