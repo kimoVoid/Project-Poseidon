@@ -33,19 +33,11 @@ public class ClearCommand extends Command {
 
         int items = 0;
 
-        for(int i = 0; i < p.getInventory().getContents().length; ++i) {
-            if (p.getInventory().getContents()[i] != null) {
-                p.getInventory().getContents()[i] = null;
-                items++;
-            }
-        }
-
-        for(int i = 0; i < p.getInventory().getArmorContents().length; ++i) {
-            if (p.getInventory().getArmorContents()[i] != null) {
-                p.getInventory().getArmorContents()[i] = null;
-                items++;
-            }
-        }
+        p.getInventory().clear();
+        p.getInventory().setHelmet(null);
+        p.getInventory().setChestplate(null);
+        p.getInventory().setLeggings(null);
+        p.getInventory().setBoots(null);
 
         broadcastCommandMessage(sender, String.format("Cleared %s item(s) from %s inventory", items, sender.getName().equals(p.getName()) ? "your" : p.getName() + "'s"));
         return true;
