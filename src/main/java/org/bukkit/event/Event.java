@@ -337,6 +337,12 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.player.PlayerItemDamageEvent
          */
         PLAYER_ITEM_DAMAGE(Category.PLAYER),
+        /**
+         * Called when a player is ready to handle OSL packets
+         *
+         * @see org.bukkit.event.player.PlayerPlayReadyEvent
+         */
+        PLAYER_PLAY_READY(Category.PLAYER),
 
         /**
          * BLOCK EVENTS

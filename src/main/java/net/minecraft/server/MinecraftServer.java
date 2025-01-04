@@ -20,6 +20,8 @@ import org.bukkit.craftbukkit.LoggerOutputStream;
 import org.bukkit.craftbukkit.command.ColouredConsoleSender;
 import org.bukkit.craftbukkit.scheduler.CraftScheduler;
 import org.bukkit.craftbukkit.util.ServerShutdownThread;
+import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerPlayReadyEvent;
 import org.bukkit.event.server.ServerCommandEvent;
 import org.bukkit.event.world.WorldInitEvent;
 import org.bukkit.event.world.WorldLoadEvent;
@@ -468,7 +470,8 @@ public class MinecraftServer implements Runnable, ICommandListener {
 
         ServerPlayNetworking.registerListener(HandshakePayload.CHANNEL, HandshakePayload::new, (server, handler, player, payload) -> {
             handler.registerClientChannels(payload.channels);
-            //ServerConnectionEvents.PLAY_READY.invoker().accept(server, player);
+            PlayerPlayReadyEvent event = new PlayerPlayReadyEvent((Player) player.getBukkitEntity());
+            Bukkit.getServer().getPluginManager().callEvent(event);
             return true;
         });
         // NSMB Poseidon End - OSL Networking
