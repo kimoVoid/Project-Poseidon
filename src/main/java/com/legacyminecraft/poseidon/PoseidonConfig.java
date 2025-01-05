@@ -83,6 +83,7 @@ public class PoseidonConfig extends Configuration {
 
         generateConfigOption("settings.remove-join-leave-debug", true);
         generateConfigOption("settings.enable-tpc-nodelay", false);
+        generateConfigOption("settings.shutdown-delay", 100);
 
         //generateConfigOption("settings.use-get-for-uuids.enabled", true);
         //generateConfigOption("settings.use-get-for-uuids.info", "This setting causes the server to use the GET method for Username to UUID conversion. This is useful incase the POST method goes offline.");
