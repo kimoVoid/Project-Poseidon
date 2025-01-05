@@ -343,6 +343,12 @@ public abstract class Event implements Serializable {
          * @see org.bukkit.event.player.PlayerPlayReadyEvent
          */
         PLAYER_PLAY_READY(Category.PLAYER),
+        /**
+         * Called when a player's statistic is incremented
+         *
+         * @see org.bukkit.event.player.PlayerStatIncrementEvent
+         */
+        PLAYER_STAT_INCREMENT(Category.PLAYER),
 
         /**
          * BLOCK EVENTS

@@ -7,8 +7,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.ChunkCompressionThread;
 import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
+import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
 import org.bukkit.event.inventory.ChestOpenedEvent;
+import org.bukkit.event.player.PlayerStatIncrementEvent;
 
 import java.util.*;
 
@@ -538,6 +540,9 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
 
     public void a(Statistic statistic, int i) {
         if (statistic != null) {
+            PlayerStatIncrementEvent ev = new PlayerStatIncrementEvent((Player)this.getBukkitEntity(), statistic.e, i);
+            Bukkit.getPluginManager().callEvent(ev);
+
             if (!statistic.g) {
                 while (i > 100) {
                     this.netServerHandler.sendPacket(new Packet200Statistic(statistic.e, 100));
