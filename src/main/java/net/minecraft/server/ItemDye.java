@@ -58,7 +58,8 @@ public class ItemDye extends Item {
 
                         if (world.getTypeId(k1, l1, i2) == 0) {
                             if (b.nextInt(10) != 0) {
-                                if (PoseidonConfig.getInstance().getConfigBoolean("world-settings.bone-meal-ferns.enabled", false)) {
+                                if (PoseidonConfig.getInstance().getConfigBoolean("world-settings.bone-meal-ferns.enabled", false)
+                                && world.getWorldChunkManager().getBiome(k1, i2).n.equals("Rainforest")) {
                                     int meta = new Random().nextInt(2) == 0 ? 1 : 2;
                                     world.setTypeIdAndData(k1, l1, i2, Block.LONG_GRASS.id, meta);
                                 } else {
