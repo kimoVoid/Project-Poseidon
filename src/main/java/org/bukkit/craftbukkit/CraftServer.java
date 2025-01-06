@@ -200,7 +200,7 @@ public final class CraftServer implements Server {
     }
 
     public String getVersion() {
-        return serverVersion + " (MC: " + protocolVersion + ")";
+        return serverVersion + "-NSMB (MC: " + protocolVersion + ")";
     }
 
     @SuppressWarnings("unchecked")
