@@ -12,6 +12,7 @@ public class ItemBed extends Item {
         super(i);
     }
 
+    @SuppressWarnings("deprecation")
     public boolean a(ItemStack itemstack, EntityHuman entityhuman, World world, int i, int j, int k, int l) {
         if (l != 1) {
             return false;
@@ -50,6 +51,7 @@ public class ItemBed extends Item {
 
                 if (event.isCancelled() || !event.canBuild()) {
                     event.getBlockPlaced().setTypeIdAndData(blockState.getTypeId(), blockState.getRawData(), false);
+                    event.getPlayer().updateInventory();
                     return false;
                 }
                 // CraftBukkit end

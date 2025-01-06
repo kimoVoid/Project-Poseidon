@@ -15,6 +15,7 @@ public class ItemReed extends Item {
         this.id = block.id;
     }
 
+    @SuppressWarnings("deprecation")
     public boolean a(ItemStack itemstack, EntityHuman entityhuman, World world, int i, int j, int k, int l) {
         int clickedX = i, clickedY = j, clickedZ = k; // CraftBukkit
 
@@ -70,7 +71,7 @@ public class ItemReed extends Item {
                     if (event.isCancelled() || !event.canBuild()) {
                         // CraftBukkit - undo; this only has reed, repeater and pie blocks
                         world.setTypeIdAndData(i, j, k, replacedBlockState.getTypeId(), replacedBlockState.getRawData());
-
+                        event.getPlayer().updateInventory();
                         return true;
                     }
 

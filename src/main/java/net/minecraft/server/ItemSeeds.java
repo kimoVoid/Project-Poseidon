@@ -15,6 +15,7 @@ public class ItemSeeds extends Item {
         this.id = j;
     }
 
+    @SuppressWarnings("deprecation")
     public boolean a(ItemStack itemstack, EntityHuman entityhuman, World world, int i, int j, int k, int l) {
         if (l != 1) {
             return false;
@@ -31,6 +32,7 @@ public class ItemSeeds extends Item {
 
                 if (event.isCancelled() || !event.canBuild()) {
                     event.getBlockPlaced().setTypeId(0);
+                    event.getPlayer().updateInventory();
                     return false;
                 }
                 // CraftBukkit end

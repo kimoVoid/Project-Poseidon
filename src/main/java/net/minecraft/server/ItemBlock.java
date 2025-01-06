@@ -17,6 +17,7 @@ public class ItemBlock extends Item {
         this.b(Block.byId[i + 256].a(2));
     }
 
+    @SuppressWarnings("deprecation")
     public boolean a(ItemStack itemstack, EntityHuman entityhuman, World world, int i, int j, int k, int l) {
         int clickedX = i, clickedY = j, clickedZ = k; // CraftBukkit
 
@@ -99,6 +100,7 @@ public class ItemBlock extends Item {
 
                         world.setTypeIdAndData(i, j, k, replacedBlockState.getTypeId(), replacedBlockState.getRawData());
                     }
+                    event.getPlayer().updateInventory();
                     return true;
 
                 }

@@ -16,6 +16,7 @@ public class ItemDoor extends Item {
         this.maxStackSize = 1;
     }
 
+    @SuppressWarnings("deprecation")
     public boolean a(ItemStack itemstack, EntityHuman entityhuman, World world, int i, int j, int k, int l) {
         if (l != 1) {
             return false;
@@ -83,6 +84,7 @@ public class ItemDoor extends Item {
 
                 if (event.isCancelled() || !event.canBuild()) {
                     event.getBlockPlaced().setTypeIdAndData(blockState.getTypeId(), blockState.getRawData(), false);
+                    event.getPlayer().updateInventory();
                     return false;
                 }
 

@@ -13,6 +13,7 @@ public class ItemSign extends Item {
         this.maxStackSize = 1;
     }
 
+    @SuppressWarnings("deprecation")
     public boolean a(ItemStack itemstack, EntityHuman entityhuman, World world, int i, int j, int k, int l) {
         if (l == 0) {
             return false;
@@ -57,6 +58,7 @@ public class ItemSign extends Item {
 
                 if (event.isCancelled() || !event.canBuild()) {
                     event.getBlockPlaced().setTypeIdAndData(blockState.getTypeId(), blockState.getRawData(), false);
+                    event.getPlayer().updateInventory();
                     return false;
                 }
                 // CraftBukkit end

@@ -16,6 +16,7 @@ public class ItemFlintAndSteel extends Item {
         this.d(64);
     }
 
+    @SuppressWarnings("deprecation")
     public boolean a(ItemStack itemstack, EntityHuman entityhuman, World world, int i, int j, int k, int l) {
         int clickedX = i, clickedY = j, clickedZ = k; // CraftBukkit
 
@@ -69,6 +70,7 @@ public class ItemFlintAndSteel extends Item {
 
             if (placeEvent.isCancelled() || !placeEvent.canBuild()) {
                 placeEvent.getBlockPlaced().setTypeIdAndData(0, (byte) 0, false);
+                placeEvent.getPlayer().updateInventory();
                 return false;
             }
             // CraftBukkit end

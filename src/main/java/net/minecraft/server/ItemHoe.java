@@ -14,6 +14,7 @@ public class ItemHoe extends Item {
         this.d(enumtoolmaterial.a());
     }
 
+    @SuppressWarnings("deprecation")
     public boolean a(ItemStack itemstack, EntityHuman entityhuman, World world, int i, int j, int k, int l) {
         int i1 = world.getTypeId(i, j, k);
         int j1 = world.getTypeId(i, j + 1, k);
@@ -36,6 +37,7 @@ public class ItemHoe extends Item {
 
                 if (event.isCancelled() || !event.canBuild()) {
                     event.getBlockPlaced().setTypeId(blockState.getTypeId());
+                    event.getPlayer().updateInventory();
                     return false;
                 }
                 // CraftBukkit end

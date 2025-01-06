@@ -12,6 +12,7 @@ public class ItemRedstone extends Item {
         super(i);
     }
 
+    @SuppressWarnings("deprecation")
     public boolean a(ItemStack itemstack, EntityHuman entityhuman, World world, int i, int j, int k, int l) {
         int clickedX = i, clickedY = j, clickedZ = k; // CraftBukkit
 
@@ -55,6 +56,7 @@ public class ItemRedstone extends Item {
 
             if (event.isCancelled() || !event.canBuild()) {
                 event.getBlockPlaced().setTypeIdAndData(blockState.getTypeId(), blockState.getRawData(), false);
+                event.getPlayer().updateInventory();
                 return false;
             }
 
