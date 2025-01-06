@@ -11,6 +11,7 @@ import org.bukkit.craftbukkit.command.ColouredConsoleSender;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.*;
+import wtf.basico.networking.PlayerInfoManager;
 import wtf.basico.networking.payload.FlightPayload;
 
 import java.io.*;
@@ -161,6 +162,7 @@ public class ServerConfigurationManager {
 
         // CraftBukkit start
         // Quitting must be before we do final save of data, in case plugins need to modify it
+        PlayerInfoManager.INSTANCE.sendPlayerInfo(entityplayer.name, false, 0);
         this.getPlayerManager(entityplayer.dimension).removePlayer(entityplayer);
         PlayerQuitEvent playerQuitEvent = new PlayerQuitEvent(this.cserver.getPlayer(entityplayer), this.msgPlayerLeave.replace("%player%", entityplayer.name));
         this.cserver.getPluginManager().callEvent(playerQuitEvent);

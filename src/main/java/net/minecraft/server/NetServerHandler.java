@@ -177,7 +177,6 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 
     public void disconnect(String s) {
         if (disconnected) return; // Poseidon: Kick/Disconnect spam fix
-        PlayerInfoManager.INSTANCE.sendPlayerInfo(this.player.name, false, 0);
 
         // CraftBukkit start
         String leaveMessage = this.msgPlayerLeave.replace("%player%", this.player.name);
