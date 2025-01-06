@@ -33,7 +33,7 @@ public class TPSCommand extends Command {
         LinkedList<Double> tpsRecords = Poseidon.getTpsRecords();
         double mspt = this.round(2, this.average(Poseidon.getAverageTickTimes()) * 1.0E-6D);
 
-        sender.sendMessage(String.format("§7Server TPS: %s MSPT: %s", formatTps(calculateAverage(tpsRecords, 0)), formatMspt(mspt)));
+        sender.sendMessage(String.format("§7Server TPS: %s §7MSPT: %s", formatTps(calculateAverage(tpsRecords, 0)), formatMspt(mspt)));
         StringBuilder message = new StringBuilder("§7TPS History: ");
 
         // Calculate and format TPS for each interval dynamically
