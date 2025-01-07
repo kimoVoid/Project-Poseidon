@@ -1,6 +1,7 @@
 package net.minecraft.server;
 
 import com.legacyminecraft.poseidon.PoseidonConfig;
+import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
 
@@ -44,9 +45,9 @@ public class BlockPiston extends Block {
         }
     }
 
-    public void doPhysics(World world, int i, int j, int k, int l) {
+    public void doPhysics(World world, int i, int j, int k, int l, EntityHuman player) {
         if (!world.isStatic && !this.b) {
-            this.g(world, i, j, k);
+            this.g(world, i, j, k, player);
         }
     }
 
@@ -57,6 +58,10 @@ public class BlockPiston extends Block {
     }
 
     private void g(World world, int i, int j, int k) {
+        this.g(world, i, j, k, null);
+    }
+
+    private void g(World world, int i, int j, int k, EntityHuman player) {
         int l = world.getData(i, j, k);
         int i1 = c(l);
         boolean flag = this.f(world, i, j, k, i1);
@@ -65,11 +70,12 @@ public class BlockPiston extends Block {
             if (flag && !d(l)) {
                 // CraftBukkit start
                 int length;
-                if (PoseidonConfig.getInstance().getConfigBoolean("world.settings.pistons.six-sided-piston-fix.enabled", true)) {
+                if (PoseidonConfig.getInstance().getConfigBoolean("world.settings.pistons.six-sided-piston-fix.enabled", true)
+                        && (player == null || !PoseidonConfig.getInstance().getConfigBoolean("world.settings.pistons.six-sided-piston-fix.allow-player-update-suppression", false))) {
                     try {
                         length = h(world, i, j, k, i1);
                     } catch (RuntimeException exception) {
-                        System.out.println("[Poseidon] A piston crash attempt occurred at " + i + " " + j + " " + k + " in " + world.getWorld().getName());
+                        //System.out.println("[Poseidon] A piston crash attempt occurred at " + i + " " + j + " " + k + " in " + world.getWorld().getName());
                         return;
                     }
                 } else {

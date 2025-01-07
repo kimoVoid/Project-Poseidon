@@ -145,7 +145,7 @@ public class ItemInWorldManager {
     public boolean b(int i, int j, int k) {
         Block block = Block.byId[this.world.getTypeId(i, j, k)];
         int l = this.world.getData(i, j, k);
-        boolean flag = this.world.setTypeId(i, j, k, 0);
+        boolean flag = this.world.setTypeId(i, j, k, 0, this.player);
 
         if (block != null && flag) {
             block.postBreak(this.world, i, j, k, l);

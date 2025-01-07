@@ -109,9 +109,9 @@ public class ItemBlock extends Item {
                 if (PoseidonConfig.getInstance().getConfigBoolean("world.settings.pistons.other-fixes.enabled", true) && (this.id == 29 || this.id == 33)) {
                     Block.byId[this.id].postPlace(world, i, j, k, l);
                     Block.byId[this.id].postPlace(world, i, j, k, entityhuman);
-                    world.update(i, j, k, this.id); // <-- world.setTypeIdAndData does this on success (tell the world)
+                    world.update(i, j, k, this.id, entityhuman); // <-- world.setTypeIdAndData does this on success (tell the world)
                 } else {
-                    world.update(i, j, k, this.id);
+                    world.update(i, j, k, this.id, entityhuman);
                     Block.byId[this.id].postPlace(world, i, j, k, l);
                     Block.byId[this.id].postPlace(world, i, j, k, entityhuman);
                 }

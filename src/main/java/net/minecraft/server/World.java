@@ -337,13 +337,17 @@ public class World implements IBlockAccess {
     }
 
     public void setData(int i, int j, int k, int l) {
+        this.setData(i, j, k, l, null);
+    }
+
+    public void setData(int i, int j, int k, int l, EntityHuman player) {
         if (this.setRawData(i, j, k, l)) {
             int i1 = this.getTypeId(i, j, k);
 
             if (Block.t[i1 & 255]) {
-                this.update(i, j, k, i1);
+                this.update(i, j, k, i1, player);
             } else {
-                this.applyPhysics(i, j, k, i1);
+                this.applyPhysics(i, j, k, i1, player);
             }
         }
     }
@@ -368,10 +372,14 @@ public class World implements IBlockAccess {
     }
 
     public boolean setTypeId(int i, int j, int k, int l) {
+        return this.setTypeId(i, j, k, l, null);
+    }
+
+    public boolean setTypeId(int i, int j, int k, int l, EntityHuman player) {
         // CraftBukkit start
         int old = this.getTypeId(i, j, k);
         if (this.setRawTypeId(i, j, k, l)) {
-            this.update(i, j, k, l == 0 ? old : l);
+            this.update(i, j, k, l == 0 ? old : l, player);
             return true;
         } else {
             return false;
@@ -398,8 +406,12 @@ public class World implements IBlockAccess {
     }
 
     protected void update(int i, int j, int k, int l) {
+        this.update(i, j, k, l, null);
+    }
+
+    protected void update(int i, int j, int k, int l, EntityHuman player) {
         this.notify(i, j, k);
-        this.applyPhysics(i, j, k, l);
+        this.applyPhysics(i, j, k, l, player);
     }
 
     public void g(int i, int j, int k, int l) {
@@ -426,15 +438,23 @@ public class World implements IBlockAccess {
     }
 
     public void applyPhysics(int i, int j, int k, int l) {
-        this.k(i - 1, j, k, l);
-        this.k(i + 1, j, k, l);
-        this.k(i, j - 1, k, l);
-        this.k(i, j + 1, k, l);
-        this.k(i, j, k - 1, l);
-        this.k(i, j, k + 1, l);
+        this.applyPhysics(i, j, k, l, null);
+    }
+
+    public void applyPhysics(int i, int j, int k, int l, EntityHuman player) {
+        this.k(i - 1, j, k, l, player);
+        this.k(i + 1, j, k, l, player);
+        this.k(i, j - 1, k, l, player);
+        this.k(i, j + 1, k, l, player);
+        this.k(i, j, k - 1, l, player);
+        this.k(i, j, k + 1, l, player);
     }
 
     private void k(int i, int j, int k, int l) {
+        this.k(i, j, k, l, null);
+    }
+
+    private void k(int i, int j, int k, int l, EntityHuman player) {
         if (!this.suppressPhysics && !this.isStatic) {
             Block block = Block.byId[this.getTypeId(i, j, k)];
 
@@ -452,6 +472,7 @@ public class World implements IBlockAccess {
                 // CraftBukkit end
 
                 block.doPhysics(this, i, j, k, l);
+                block.doPhysics(this, i, j, k, l, player); // NSMB - only used by pistons
             }
         }
     }

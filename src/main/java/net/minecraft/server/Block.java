@@ -275,6 +275,9 @@ public class Block {
     public void doPhysics(World world, int i, int j, int k, int l) {
     }
 
+    public void doPhysics(World world, int i, int j, int k, int l, EntityHuman player) {
+    }
+
     public int c() {
         return 10;
     }
