@@ -110,12 +110,14 @@ public class EntityGhast extends EntityFlying implements IMonster {
             this.K = this.yaw = -((float) Math.atan2(d5, d7)) * 180.0F / 3.1415927F;
             if (this.e(this.target)) {
                 if (this.f == 10) {
-                    this.world.makeSound(this, "mob.ghast.charge", this.k(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+                    this.world.e(1007, (int) this.locX, (int) this.locY, (int) this.locZ, 0);
+                    //this.world.makeSound(this, "mob.ghast.charge", this.k(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
                 }
 
                 ++this.f;
                 if (this.f == 20) {
-                    this.world.makeSound(this, "mob.ghast.fireball", this.k(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+                    this.world.e(1008, (int) this.locX, (int) this.locY, (int) this.locZ, 0);
+                    //this.world.makeSound(this, "mob.ghast.fireball", this.k(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
                     EntityFireball entityfireball = new EntityFireball(this.world, this, d5, d6, d7);
                     double d8 = 4.0D;
                     Vec3D vec3d = this.b(1.0F);
